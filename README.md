@@ -1,3 +1,5 @@
+sosem
+
 Project Zomboid RolePlay Server
 ========================
 >Soon
