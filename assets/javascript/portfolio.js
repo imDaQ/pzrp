@@ -33,11 +33,11 @@ $(document).ready(() => {
     if (i != links.length - 1) $('#marquee').append(' <img class="emoticon" src="assets/images/pic4.png"> ');
   }
 
-  if (mobileAndTabletCheck()) {
-    $('#background').replaceWith('<div id="background" style="background: url(https://media.githubusercontent.com/media/imDaQ/pzrp/main/assets/others/Untitled.mp4);"></div>');
+  // if (mobileAndTabletCheck()) {
+  //   $('#background').replaceWith('<div id="background" style="background: url(https://media.githubusercontent.com/media/imDaQ/pzrp/main/assets/others/Untitled.mp4);"></div>');
 
-    app.shouldIgnoreVideo = true;
-  }
+  //   app.shouldIgnoreVideo = False;
+  // }
 
   app.titleChanger(['PZRP']);
   app.iconChanger(['assets/images/pic2.jpg']);
