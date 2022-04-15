@@ -34,7 +34,7 @@ $(document).ready(() => {
   }
 
   if (mobileAndTabletCheck()) {
-    $('#background').replaceWith('<div id="background" style="background: url(assets/others/Untitled.mp4);"></div>');
+    $('#background').replaceWith('<div id="background" style="background: url(https://media.githubusercontent.com/media/imDaQ/pzrp/main/assets/others/Untitled.mp4);"></div>');
 
     app.shouldIgnoreVideo = true;
   }
