@@ -1,43 +1,63 @@
-// If you like my work, please consider supporting it at https://www.patreon.com/iangilman or https://github.com/sponsors/iangilman
+// the global image size and tiling
+const height = 3500;
+const width = 6950;
+const tsize = 250;
 
-// Don't forget to include the JavaScript files from the Settings for this CodePen (jQuery and OpenSeadragon)
+// initialize the openseadragon viewer
+const osd = OpenSeadragon({
+  id: 'osd',
+  prefixUrl: 'https://openseadragon.github.io/openseadragon/images/',
+  tileSources: {
+    type: 'image',
+    url: 'map2.png'
+  }
+  });
 
-// NOTE: this Codepen is for cross-site DZI access (where your code is on one server and your DZI data is on another server) where 
-// you can't set up CORS on the DZI server for whatever reason. That used to be fairly common, but now it's much more rare. 
 
-// Change this to the path to your "_files" directory on the remote server. 
-var dziFilesUrl = '//openseadragon.github.io/example-images/duomo/duomo_files/';
+// initialize the geojs viewer
+const params = geo.util.pixelCoordinateParams('#geojs', width, height, tsize, tsize);
+params.map.clampZoom = false;
+params.map.clampBoundsX = false;
+params.map.clampBoundsY = false;
+const map = geo.map(params.map);
+const layer = map.createLayer('annotation');
 
-// Change this to the contents of the .dzi file from your server. 
-var dziData = '<?xml version="1.0" encoding="utf-8"?><Image TileSize="254" Overlap="1" Format="jpg" xmlns="http://schemas.microsoft.com/deepzoom/2008"><Size Width="13920" Height="10200"/></Image>';
+// turn off geojs map navigation
+map.interactor().options({ actions: [] });
 
-// This converts the XML into a DZI tile source specification object that OpenSeadragon understands. 
-var tileSourceFromData = function(data, filesUrl) {
-  var $xml = $($.parseXML(data));
-  var $image = $xml.find('Image');
-  var $size = $xml.find('Size');
+// get the current bounds from the osd viewer
+function getBounds() {
+  return osd.viewport.viewportToImageRectangle(osd.viewport.getBounds(true));
+}
 
-  var dzi = {
-    Image: {
-      xmlns: $image.attr('xmlns'),
-      Url: filesUrl,
-      Format: $image.attr('Format'),
-      Overlap: $image.attr('Overlap'),
-      TileSize: $image.attr('TileSize'),
-      Size: {
-        Height: $size.attr('Height'),
-        Width: $size.attr('Width')
-      }
-    }
-  };  
-  
-  console.log(dzi);
-  return dzi;
-};
+// set the geojs bounds from the osd bounds
+function setBounds() {
+  const bounds = getBounds();
+  map.bounds({
+    left: bounds.x,
+    right: bounds.x + bounds.width,
+    top: bounds.y,
+    bottom: bounds.y + bounds.height });
 
-// This creates the actual viewer. 
-var viewer = OpenSeadragon({
-  id: 'openseadragon1',
-  prefixUrl: '//openseadragon.github.io/openseadragon/images/',
-  tileSources: tileSourceFromData(dziData, dziFilesUrl)
-});
+}
+
+// add handlers to tie navigation events together
+osd.addHandler('open', setBounds);
+osd.addHandler('animation', setBounds);
+
+// add a handler for when an annotation is created
+function created(evt) {
+  $('#geojs .geojs-layer').css('pointer-events', 'none');
+
+  // write out the annotation definition
+  console.log(evt.annotation.features()[0]);
+}
+map.geoOn(geo.event.annotation.state, created);
+
+// add handlers for drawing annotations
+function draw(evt) {
+  $('#geojs .geojs-layer').css('pointer-events', 'auto');
+  const type = $(evt.target).data('type');
+  layer.mode(type);
+}
+$('.controls-container button').click(draw);
