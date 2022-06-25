@@ -1,7 +1,7 @@
 // the global image size and tiling
 const height = 3500;
 const width = 6950;
-const tsize = 250;
+const tsize = 500;
 
 // initialize the openseadragon viewer
 const osd = OpenSeadragon({
