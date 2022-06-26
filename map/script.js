@@ -1,19 +1,19 @@
 var baseTileSource = {
   Image: {
     xmlns: 'http://schemas.microsoft.com/deepzoom/2008',
-    Url: 'http://openseadragon.github.io/example-images/highsmith/highsmith_files/',
-    Format: 'jpg',
+    Url: 'https://imgur.com/eON2wQF.png',
+    Format: 'png',
     Overlap: '2',
     TileSize: '256',
     Size: {
-      Height: '10500',
-      Width: '20850'
+      Height: '9221',
+      Width: '7026'
     }
   }
 };
 var topTileSource = {
   type: 'image',
-  url: 'https://i.imgur.com/eON2wQF.png',
+  url: 'http://aurel.clanweb.eu/nikita/smile.png' //'TP-2019_2623-12-1.png',
 
 };
 var viewer = OpenSeadragon({
@@ -106,5 +106,4 @@ $(".niki-wrapper #layer-01").on("input",function (){
 viewer.addHandler('tile-loaded', function(event) {
   console.log(event)
   var canvas = document.createElement( 'canvas' )
-  } ) 
-                   
+  } )
