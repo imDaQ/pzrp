@@ -1,7 +1,7 @@
 var baseTileSource = {
   Image: {
     xmlns: 'http://schemas.microsoft.com/deepzoom/2008',
-    Url: '',
+    Url: 'map2.png',
     Format: 'jpg',
     Overlap: '2',
     TileSize: '256',
