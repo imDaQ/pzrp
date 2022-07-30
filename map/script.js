@@ -1,19 +1,19 @@
 var baseTileSource = {
   Image: {
-    xmlns: 'http://schemas.microsoft.com/deepzoom/2008',
-    Url: 'map2.png',
-    Format: 'jpg',
+    xmlns: 'map3.png',
+    Url: 'map3.png',
+    Format: 'png',
     Overlap: '2',
     TileSize: '256',
     Size: {
-      Height: '10500',
-      Width: '20850'
+      Height: '9000',
+      Width: '17000'
     }
   }
 };
 var topTileSource = {
   type: 'image',
-  url: 'map2.png',
+  url: 'map3.png',
 
 };
 var viewer = OpenSeadragon({
